@@ -38,7 +38,7 @@
 
 http://openaccess.thecvf.com/content_cvpr_2015/papers/Szegedy_Going_Deeper_With_2015_CVPR_paper.pdf
 
-GoogLeNet, 提出 3x3, 1x1 convolution 及
+GoogLeNet, 使用 3x3, 1x1 convolution 構成 inception 網路模組
 
 103. "Deep residual learning for image recognition"
 
