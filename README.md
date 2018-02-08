@@ -5,6 +5,23 @@
 0. 基礎: 機器學習/深度學習/圖形處理器技術
 
 1. "DeepFace: Closing the Gap to Human-Level Performance in Face Verification"
+
 https://www.cv-foundation.org/openaccess/content_cvpr_2014/papers/Taigman_DeepFace_Closing_the_2014_CVPR_paper.pdf?spm=5176.100239.blogcont55892.18.pm8zm1&file=Taigman_DeepFace_Closing_the_2014_CVPR_paper.pdf
 
-*face alignment / siamese network
+*3d face alignment / siamese network
+
+2. "Deep Face Recognition"
+
+http://cis.csuohio.edu/~sschung/CIS660/DeepFaceRecognition_parkhi15.pdf
+
+*用 triplet loss 學 face embedding
+
+2a. "Very deep convolutional networks for large-scale image recognition. In International Conference on Learning Representations"
+
+*著名的 VGG Network
+
+3. "FaceNet: A Unified Embedding for Face Recognition and Clustering"
+
+https://www.cv-foundation.org/openaccess/content_cvpr_2015/papers/Schroff_FaceNet_A_Unified_2015_CVPR_paper.pdf
+
+*學習 FaceNet embeddings, 此向量空間內的距離代表人臉的相似程度
