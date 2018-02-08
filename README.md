@@ -35,7 +35,14 @@ https://arxiv.org/pdf/1409.1556/
 https://www.cv-foundation.org/openaccess/content_cvpr_2015/papers/Schroff_FaceNet_A_Unified_2015_CVPR_paper.pdf
 
 *用 triplet loss 產生 128 維的 FaceNet embeddings (此向量空間內的距離代表人臉的相似程度), LFW 準確度超過 99%
- 
+
+
+11. "Deep residual learning for image recognition"
+
+http://openaccess.thecvf.com/content_cvpr_2016/papers/He_Deep_Residual_Learning_CVPR_2016_paper.pdf
+
+著名的 residual network, 讓訓練 100 層以上的深度學習變得容易
+
 A. "Labeled Faces in the Wild: A Database for Studying Face Recognition in Unconstrained Environments"
 
 http://cs.brown.edu/courses/cs143/2011/proj4/papers/lfw.pdf
