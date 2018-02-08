@@ -9,9 +9,13 @@
 https://www.cv-foundation.org/openaccess/content_cvpr_2014/papers/Taigman_DeepFace_Closing_the_2014_CVPR_paper.pdf?spm=5176.100239.blogcont55892.18.pm8zm1&file=Taigman_DeepFace_Closing_the_2014_CVPR_paper.pdf
 
 *最早的深度學習人臉辨識
+
 *已經有　metric learning 的觀念 (使用 siamese network)
+
 *無權值共享的 CNN => 過多的參數
+
 *3D alignment => 過度複雜
+
 
 2. "Deep Face Recognition" 
 
