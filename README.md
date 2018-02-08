@@ -23,7 +23,7 @@ http://cis.csuohio.edu/~sschung/CIS660/DeepFaceRecognition_parkhi15.pdf
 
 *著名的 VGG Face, 整套流程包含 face dataset 的建立
 
-2.A "Very deep convolutional networks for large-scale image recognition. In International Conference on Learning Representations"
+2. A "Very deep convolutional networks for large-scale image recognition. In International Conference on Learning Representations"
 
 https://arxiv.org/pdf/1409.1556/
 
