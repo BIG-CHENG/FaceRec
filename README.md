@@ -38,4 +38,6 @@ https://www.cv-foundation.org/openaccess/content_cvpr_2015/papers/Schroff_FaceNe
  
 A. "Labeled Faces in the Wild: A Database for Studying Face Recognition in Unconstrained Environments"
 
+http://cs.brown.edu/courses/cs143/2011/proj4/papers/lfw.pdf
+
 *著名的 lfw 人臉辨識準確率測試資料集
