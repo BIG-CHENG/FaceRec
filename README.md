@@ -23,7 +23,7 @@ http://cis.csuohio.edu/~sschung/CIS660/DeepFaceRecognition_parkhi15.pdf
 
 *著名的 VGG Face, 整套流程包含 face dataset 的建立
 
-2. A "Very deep convolutional networks for large-scale image recognition. In International Conference on Learning Representations"
+2. (A) "Very deep convolutional networks for large-scale image recognition. In International Conference on Learning Representations"
 
 https://arxiv.org/pdf/1409.1556/
 
@@ -36,3 +36,6 @@ https://www.cv-foundation.org/openaccess/content_cvpr_2015/papers/Schroff_FaceNe
 
 *用 triplet loss 產生 128 維的 FaceNet embeddings (此向量空間內的距離代表人臉的相似程度), LFW 準確度超過 99%
  
+A. "Labeled Faces in the Wild: A Database for Studying Face Recognition in Unconstrained Environments"
+
+*著名的 lfw 人臉辨識準確率測試資料集
