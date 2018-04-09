@@ -46,6 +46,11 @@ http://openaccess.thecvf.com/content_cvpr_2016/papers/He_Deep_Residual_Learning_
 
 residual network, 解決梯度消失問題, 讓訓練 100 (甚至1000) 層以上的深度學習變得容易
 
+104. "MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications"
+
+https://arxiv.org/abs/1704.04861
+
+mobile net, 小而快的網路， 但犧牲準確度， 
 
 A. "Labeled Faces in the Wild: A Database for Studying Face Recognition in Unconstrained Environments"
 
