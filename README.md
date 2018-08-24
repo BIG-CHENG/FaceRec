@@ -1,5 +1,7 @@
 # FaceRec
 
+#Papers
+
 深度學習人臉辨識技術
 
 0. 基礎: 機器學習/深度學習/圖形處理器技術
@@ -57,3 +59,7 @@ A. "Labeled Faces in the Wild: A Database for Studying Face Recognition in Uncon
 http://cs.brown.edu/courses/cs143/2011/proj4/papers/lfw.pdf
 
 *著名的 lfw 人臉辨識準確率測試資料集
+
+# Results
+![LFW precision-recall ](https://github.com/BIG-CHENG/FaceRec/blob/master/fr_lfw_prec_recall_all.png)
+![LFW ROC ](https://github.com/BIG-CHENG/FaceRec/blob/master/fr_lfw_roc_all.png)
