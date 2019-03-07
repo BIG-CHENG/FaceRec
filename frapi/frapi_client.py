@@ -165,7 +165,8 @@ def img2fes(img):
   env = _env()
   return do_inference(env.server, env.work_dir, env.concurrency, env.num_tests, img)
 
-## main
+
+## naive local test
 if __name__ == "__main__":
 
   def utest_img2fes():
@@ -180,8 +181,8 @@ if __name__ == "__main__":
       if False: # npy
         return file2img1("coco1.npy")
       else:
-        imgs = fimg.file2img(["coco1.png"])
-        return imgs[0]
+        img = fimg.file2img("coco1.png")
+        return img
 
     img = prepare_img()
     print (img)
