@@ -59,7 +59,6 @@ def load_data(image_paths, do_random_crop, do_random_flip, image_size, do_prewhi
         img = prewhiten(img)
     #img = crop(img, do_random_crop, image_size)
     #img = flip(img, do_random_flip)
-
     
     if img.shape[2] == 4: ## if image has alpha layer
         img = img [:, :, :3] 

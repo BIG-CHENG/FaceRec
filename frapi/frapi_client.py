@@ -114,7 +114,7 @@ def _create_rpc_callback(label, task_syncer):
 
 
 
-def do_inference(hostport, work_dir, concurrency, num_tests, image):
+def do_inference(hostport, work_dir, concurrency, num_tests, imgs):
   """Tests PredictionService with concurrent requests.
 
   Args:
@@ -137,17 +137,14 @@ def do_inference(hostport, work_dir, concurrency, num_tests, image):
   for _ in range(num_tests):
     request = predict_pb2.PredictRequest()
     
-  if False: ## mnet
-    request.model_spec.name = "mnet1"
-    request.model_spec.signature_name = 'mnet1_signature'
-  else: ## fnet
-    request.model_spec.name = "fnet1"
-    request.model_spec.signature_name = 'mnet1_signature'
-    
-    #image, label = test_data_set.next_batch(1)
-    
-    request.inputs['input'].CopyFrom(
-        tf.contrib.util.make_tensor_proto(image, shape=[1, 160, 160, 3]))
+    if False: ## mnet
+      request.model_spec.name = "mnet1"
+      request.model_spec.signature_name = 'mnet1_signature'
+    else: ## fnet
+      request.model_spec.name = "fnet1"
+      request.model_spec.signature_name = 'mnet1_signature'
+
+    request.inputs['input'].CopyFrom(tf.contrib.util.make_tensor_proto(imgs, shape=imgs.shape))
     
     task_syncer.throttle()  ## concurrency control
     
@@ -157,39 +154,43 @@ def do_inference(hostport, work_dir, concurrency, num_tests, image):
 
   #task_syncer.get_error_rate() ## wait !!
   task_syncer.wait_result() ## wait !!
-  print ("err#=", task_syncer._error)  
+  #print ("err#=", task_syncer._error)
   return task_syncer._fess
 
 def img2fes(img):
   #FLAGS.server = "127.0.0.1:8500"
   env = _env()
-  return do_inference(env.server, env.work_dir, env.concurrency, env.num_tests, img)
+  if (len(img.shape) == 3):
+    imgs = img.reshape(1, 160, 160, 3)
+  else:
+    imgs = img
+  return do_inference(env.server, env.work_dir, env.concurrency, env.num_tests, imgs)
 
+def imgs2fess(imgs):
+  env = _env()
+  n_imgs = imgs.shape[0]
+  # todo: check n_imgs ...
+  fess = do_inference(env.server, env.work_dir, env.concurrency, env.num_tests, imgs)
+  return fess.reshape(n_imgs, 128)
 
 ## naive local test
 if __name__ == "__main__":
 
   def utest_img2fes():
-  
-    def file2img1(fname):
-      ## todo: add file check
-      img = np.load(fname)
-      print (img.shape)
-      return img
-
-    def prepare_img():
-      if False: # npy
-        return file2img1("coco1.npy")
-      else:
-        img = fimg.file2img("coco1.png")
-        return img
-
-    img = prepare_img()
-    print (img)
+    img = fimg.file2img("coco1.png")
+    print (img.shape) # (160,160,3)
     fes = img2fes(img)
     print (str(fes))
     
+  def utest_imgs2fess():
+    imgs = fimg.files2imgs(["coco1.png", "coco7.png"])
+    print (len(imgs.shape)) # (2, 160,160,3)
+    fess = imgs2fess(imgs)
+    print (str(fess))    
+    #print (str(fess[1]))
+    
   utest_img2fes()
+  utest_imgs2fess()
     
     
     

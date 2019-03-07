@@ -7,26 +7,22 @@
 
 import numpy as np
 import frapi
-#import face_recognition.api as face_recognition
-
-print (frapi.__version__)
-
-print (dir(frapi))
-
 import frapi.frapi_client
 
-#frapi.frapi_client.FLAGS.server = "127.0.0.1:8500"
-
-#print frapi.frapi_client.img2fes(
-
+def fname2fes(fname):
+  img = frapi.frapi_image.file2img(fname)
+  return frapi.frapi_client.img2fes(img)
 
 # convert images to feature vectors
-fes1 = frapi.frapi_client.img2fes("obama.jpg")
-fes2 = frapi.frapi_client.img2fes("biden.jpg")
-fesq = frapi.frapi_client.img2fes("obama2.jpg")
+fes_c1 = fname2fes("coco1.png")
+fes_c7 = fname2fes("coco7.png")
+fes_n1 = fname2fes("nicole1.png")
+fes_n7 = fname2fes("nicole7.png")
 
 # show distance
-print (np.inner(fes1, fesq))  # show be larger (>0.6)
-print (np.inner(fes2, fesq))  # show be smaller (<0.5)
+print()
+print ("coco vs coco: %f" % np.inner(fes_c1, fes_c7))  # show be larger (>0.6)
+print ("coco vs nicole: %f" % np.inner(fes_c1, fes_n1))  # show be smaller (<0.5)
+print ("nicole vs nicole: %f" % np.inner(fes_n1, fes_n7))  # show be larger (>0.6)
 
 
