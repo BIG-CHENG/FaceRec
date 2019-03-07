@@ -1,0 +1,5 @@
+numpy
+grpcio
+tensorflow
+tensorflow-serving-api
+
