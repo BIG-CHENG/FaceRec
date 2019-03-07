@@ -64,5 +64,9 @@ http://cs.brown.edu/courses/cs143/2011/proj4/papers/lfw.pdf
 *著名的 lfw 人臉辨識準確率測試資料集
 
 # Results
+99%
+*https://github.com/BIG-CHENG/FaceRec/blob/master/fr_lfw_prec_recall_all.png
 ![LFW precision-recall ](https://github.com/BIG-CHENG/FaceRec/blob/master/fr_lfw_prec_recall_all.png)
+*https://github.com/BIG-CHENG/FaceRec/blob/master/fr_lfw_roc_all.png
 ![LFW ROC ](https://github.com/BIG-CHENG/FaceRec/blob/master/fr_lfw_roc_all.png)
+
