@@ -21,6 +21,8 @@ class _env:
   num_tests = 1   # Number of test images
   server = "127.0.0.1:8500" # PredictionService host:port
   work_dir = '/tmp' # Working directory
+  model = "fnet1" ## or fnet1
+  signature = "mnet1_signature" # the same as fnet
   
 
 class _TaskSyncer(object):
@@ -114,7 +116,7 @@ def _create_rpc_callback(label, task_syncer):
 
 
 
-def do_inference(hostport, work_dir, concurrency, num_tests, imgs):
+def do_inference(hostport, work_dir, concurrency, num_tests, model, signature, imgs):
   """Tests PredictionService with concurrent requests.
 
   Args:
@@ -137,13 +139,17 @@ def do_inference(hostport, work_dir, concurrency, num_tests, imgs):
   for _ in range(num_tests):
     request = predict_pb2.PredictRequest()
     
+    """
     if False: ## mnet
       request.model_spec.name = "mnet1"
       request.model_spec.signature_name = 'mnet1_signature'
     else: ## fnet
       request.model_spec.name = "fnet1"
       request.model_spec.signature_name = 'mnet1_signature'
-
+    """
+    request.model_spec.name = model
+    request.model_spec.signature_name = signature
+    
     request.inputs['input'].CopyFrom(tf.contrib.util.make_tensor_proto(imgs, shape=imgs.shape))
     
     task_syncer.throttle()  ## concurrency control
@@ -164,13 +170,13 @@ def img2fes(img):
     imgs = img.reshape(1, 160, 160, 3)
   else:
     imgs = img
-  return do_inference(env.server, env.work_dir, env.concurrency, env.num_tests, imgs)
+  return do_inference(env.server, env.work_dir, env.concurrency, env.num_tests, env.model, env.signature, imgs)
 
 def imgs2fess(imgs):
   env = _env()
   n_imgs = imgs.shape[0]
   # todo: check n_imgs ...
-  fess = do_inference(env.server, env.work_dir, env.concurrency, env.num_tests, imgs)
+  fess = do_inference(env.server, env.work_dir, env.concurrency, env.num_tests, env.model, env.signature, imgs)
   return fess.reshape(n_imgs, 128)
 
 ## naive local test
@@ -179,6 +185,9 @@ if __name__ == "__main__":
   def utest_img2fes():
     img = fimg.file2img("coco1.png")
     print (img.shape) # (160,160,3)
+    if False: # mnet1
+      _env.server = "127.0.0.1:8600"
+      _env.model = "mnet1"
     fes = img2fes(img)
     print (str(fes))
     
@@ -190,7 +199,7 @@ if __name__ == "__main__":
     #print (str(fess[1]))
     
   utest_img2fes()
-  utest_imgs2fess()
+  #utest_imgs2fess()
     
     
     

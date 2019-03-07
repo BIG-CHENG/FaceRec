@@ -10,6 +10,9 @@ import frapi
 import frapi.frapi_client
 
 def fname2fes(fname):
+  if True: ## mnet1
+    frapi.frapi_client._env.server = "127.0.0.1:8600"
+    frapi.frapi_client._env.model = "mnet1"
   img = frapi.frapi_image.file2img(fname)
   return frapi.frapi_client.img2fes(img)
 
