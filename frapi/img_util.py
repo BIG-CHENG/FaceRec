@@ -9,7 +9,7 @@ import numpy as np
 #from scipy import misc
 from PIL import Image
 
-image_size = 160
+img_size = 160
 
 def prewhiten(x):
   mean = np.mean(x)
@@ -20,22 +20,38 @@ def prewhiten(x):
 
 def to_rgb(img):
   w, h = img.shape[0], img.shape[1]
-  ret = np.empty((w, h, 3), dtype=np.uint8)
+  ret = np.zeros((w, h, 3), dtype=np.uint8)
   ret[:, :, 0] = ret[:, :, 1] = ret[:, :, 2] = img[:, :, 0]
   return ret
 
 def _file2img(fname):
-  ## todo: check fname
+  ## todo: check file
   #img = misc.imread(fname)
   img = Image.open(fname)
-  return np.array(img)
+  return img, np.array(img)
+  #Image.fromarray(img )  ## reverse
 
-def load_data(image_paths, do_random_crop, do_random_flip, image_size, do_prewhiten=True):
+## conver image for fr
+# whitening
+# to rgb (if gray-scale)
+# remove alpha layer
+def _img2img4fr(img, do_prewhiten=True):
+    if len(img.shape) == 2: ## mono
+      img = img.reshape(img_size, img_size, 1)
+    if img.shape[2] <= 2:
+      img = to_rgb(img) 
+    if do_prewhiten:
+      img = prewhiten(img)  
+    if img.shape[2] == 4: ## if image has alpha layer
+      img = img [:, :, :3]
+    return img.astype(np.float32)
+
+def load_data(image_paths, img_size, do_prewhiten=True):
   nrof_samples = len(image_paths)
-  images = np.zeros((nrof_samples, image_size, image_size, 3))
+  images = np.zeros((nrof_samples, img_size, img_size, 3))
   for i in range(nrof_samples):
     #img = misc.imread(image_paths[i])
-    img = _file2img(image_paths[i])
+    _, img = _file2img(image_paths[i])
     if img.shape[2] == 2:
         img = to_rgb(img) 
     if do_prewhiten:
@@ -47,11 +63,11 @@ def load_data(image_paths, do_random_crop, do_random_flip, image_size, do_prewhi
   return images
 
 def file2img(path):
-  images = load_data([path], False, False, image_size)
+  images = load_data([path], img_size)
   return images[0].astype(np.float32)          
 
 def files2imgs(paths):
-  images = load_data(paths, False, False, image_size)
+  images = load_data(paths, img_size)
   return images.astype(np.float32)
 
 

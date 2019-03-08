@@ -1,8 +1,5 @@
 numpy
-scipy
 Pillow
-dlib
-scikit-image
 grpcio
 tensorflow
 tensorflow-serving-api

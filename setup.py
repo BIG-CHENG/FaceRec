@@ -6,7 +6,6 @@ with open("README.md", "r") as fh:
 
 requirements = [
     'numpy',
-    'scipy',
     'Pillow',
     'grpcio',
     'tensorflow',

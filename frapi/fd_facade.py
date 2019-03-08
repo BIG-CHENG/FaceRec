@@ -7,7 +7,8 @@ from __future__ import print_function
 import dlib
 import numpy as np
 #from scipy import misc
-from PIL import Image
+#from PIL import Image
+import frapi.img_util as img_util
 
 ## convert dlib-rectangles to numpy matrix
 def _rects2dets(rects):
@@ -18,6 +19,8 @@ def _rects2dets(rects):
     dets[i] = np.array([d.left(), d.top(), d.right(), d.bottom()])
   return dets
 
+img_size = 160
+
 class fd_facade:
 
   def __init__(self):
@@ -25,16 +28,34 @@ class fd_facade:
 
   def file2dets(self, fname):
     ## todo check 
-    #img = misc.imread(fname)
-    img = Image.open(fname)
-    img = np.array(img)
-    #Image.fromarray(img )
+    _, img = img_util._file2img(fname)
+    
     #print (img.shape)
     rects = self.detector(img, 0)
     dets = _rects2dets(rects)
     return dets
 
 
+  def file2crops(self, fname, for_fr=True):
+    raw, img = img_util._file2img(fname)
+    rects = self.detector(img, 0)
+    dets = _rects2dets(rects)
+    
+    n_det = dets.shape[0]
+    imgs_crop = []
+    for i in range(n_det):
+      raw_crop = raw.crop(dets[i])
+      raw_crop = raw_crop.resize((img_size, img_size))
+      raw_crop.save("%d.png" % i) ## debug
+      img_crop = np.array(raw_crop)
+      #print (img_crop.shape)
+      if for_fr:
+        img_crop = img_util._img2img4fr(img_crop)
+      imgs_crop += [img_crop]
+      
+    return imgs_crop
+      
+  
 """
 def run_crop_face():
 

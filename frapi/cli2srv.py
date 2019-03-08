@@ -177,6 +177,7 @@ def imgs2fess(imgs):
   n_imgs = imgs.shape[0]
   # todo: check n_imgs ...
   fess = do_inference(env.server, env.work_dir, env.concurrency, env.num_tests, env.model, env.signature, imgs)
+  print (fess.shape)
   return fess.reshape(n_imgs, 128)
 
 ## naive local test

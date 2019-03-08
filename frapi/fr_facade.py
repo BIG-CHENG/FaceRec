@@ -29,9 +29,17 @@ class fr_facade:
   def files2reg(self, fnames, names):
     ## todo: check fnames, names ...
     imgs = img_util.files2imgs(fnames)
+    #print (imgs.shape)
     self.names_reg = names
     self.fess_reg = cli2srv.imgs2fess(imgs)
 
+  ## ref. to files2reg
+  def imgs2reg(self, imgs, names):
+    #print (imgs.shape)
+    ## todo: check imgs shape, names ...
+    self.names_reg = names
+    self.fess_reg = cli2srv.imgs2fess(imgs)
+    
   #todo:
   #def dir2reg():
 
