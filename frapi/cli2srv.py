@@ -14,7 +14,7 @@ import tensorflow as tf
 from tensorflow_serving.apis import predict_pb2
 from tensorflow_serving.apis import prediction_service_pb2_grpc
 
-import frapi.frapi_image as fimg
+import frapi.img_util as img_util
 
 class _env:
   concurrency = 1   # maximum number of concurrent inference requests
@@ -183,7 +183,7 @@ def imgs2fess(imgs):
 if __name__ == "__main__":
 
   def utest_img2fes():
-    img = fimg.file2img("coco1.png")
+    img = img_util.file2img("coco1.png")
     print (img.shape) # (160,160,3)
     if False: # mnet1
       _env.server = "127.0.0.1:8600"
@@ -192,7 +192,7 @@ if __name__ == "__main__":
     print (str(fes))
     
   def utest_imgs2fess():
-    imgs = fimg.files2imgs(["coco1.png", "coco7.png"])
+    imgs = img_util.files2imgs(["coco1.png", "coco7.png"])
     print (len(imgs.shape)) # (2, 160,160,3)
     fess = imgs2fess(imgs)
     print (str(fess))    

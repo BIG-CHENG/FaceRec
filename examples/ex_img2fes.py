@@ -8,19 +8,21 @@
 import numpy as np
 import frapi
 
+import frapi.cli2srv as cli2srv
+import frapi.img_util as img_util
+
+## show basic info
 print (frapi.__version__)
-
-print (dir(frapi))
-
-import frapi.frapi_client
-
-print(frapi.frapi_client._env.server)
+print(cli2srv._env.server)
 #frapi.frapi_client.FLAGS.server = "127.0.0.1:8500"
 
-img1 = frapi.frapi_image.file2img("coco1.png")
+## load image
+img1 = img_util.file2img("coco1.png")
 print (img1)
 
-print (frapi.frapi_client.img2fes(img1))
+## image to features
+fes1 = cli2srv.img2fes(img1)
+print (fes1)
 
 
 
