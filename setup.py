@@ -10,7 +10,8 @@ requirements = [
     'Pillow',
     'grpcio',
     'tensorflow',
-    'tensorflow-serving-api'
+    'tensorflow-serving-api',
+    'dlib'
 ]
 
 setuptools.setup(

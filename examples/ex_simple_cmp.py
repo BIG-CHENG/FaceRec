@@ -9,29 +9,25 @@ import numpy as np
 import frapi
 import frapi.cli2srv as cli2srv
 import frapi.img_util as img_util
+import frapi.file_util as file_util
 import frapi.math_helper as math_helper
 
-def fname2fes(fname):
-  if True: ## mnet1
-    cli2srv._env.server = "127.0.0.1:8600"
-    cli2srv._env.model = "mnet1"
-  img = img_util.file2img(fname)
-  return cli2srv.img2fes(img)
+## change server if need
+if True: ## mnet1
+  cli2srv._env.server = "127.0.0.1:8600"
+  cli2srv._env.model = "mnet1"
 
-# convert images to feature vectors
-fes_c1 = fname2fes("coco1.png")
-fes_c7 = fname2fes("coco7.png")
-fes_n1 = fname2fes("nicole1.png")
-fes_n7 = fname2fes("nicole7.png")
+names = ["coco"]*2 + ["nicole"]*2
+path_imgs = file_util.fnames2paths("../imgs",  ["coco1.png", "coco7.png", "nicole1.png", "nicole7.png"])
+imgs = img_util.files2imgs(path_imgs)
+fess = cli2srv.imgs2fess(imgs)
 
-# show distance
+# show similarity
 print()
-"""
-print ("coco vs coco: %f" % np.inner(fes_c1, fes_c7))  # show be larger (>0.6)
-print ("coco vs nicole: %f" % np.inner(fes_c1, fes_n1))  # show be smaller (<0.5)
-print ("nicole vs nicole: %f" % np.inner(fes_n1, fes_n7))  # show be larger (>0.6)
+for i in range(len(names)-1):
+  print ("%s vs %s: %f" % (names[i], names[i+1], math_helper.fes2sim(fess[i], fess[i+1])))
 """
 print ("coco vs coco: %f" % math_helper.fes2sim(fes_c1, fes_c7))  # show be larger (>0.6)
 print ("coco vs nicole: %f" % math_helper.fes2sim(fes_c1, fes_n1))  # show be smaller (<0.5)
 print ("nicole vs nicole: %f" % math_helper.fes2sim(fes_n1, fes_n7))  # show be larger (>0.6)
-
+"""

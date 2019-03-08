@@ -9,6 +9,7 @@ import numpy as np
 import frapi.cli2srv as cli2srv
 import frapi.img_util as img_util
 import frapi.math_helper as math_helper
+import frapi.file_util as file_util
 
 def file2fes(fname):
   ## todo: check fname
@@ -44,21 +45,29 @@ class fr_facade:
 
 ## naive local test
 if __name__ == "__main__":
+  import os
 
   fr1 = fr_facade()
+  dir_base = "../imgs"
   
   def utest_reg():
-    fname_imgs = ["coco1.png", "coco7.png", "nicole1.png", "nicole7.png"]
+    #dir_base = "../imgs"
+    #fname_imgs = ["coco1.png", "coco7.png", "nicole1.png", "nicole7.png"]
+    #path_imgs = [os.path.join(dir_base, fname) for fname in fname_imgs]
+    path_imgs = file_util.list_files(dir_base)
+    print (path_imgs)
     names = ["coco"]*2 + ["nicole"]*2
-    fr1.files2reg(fname_imgs, names)
+    print (names)
+    fr1.files2reg(path_imgs, names)
     print (fr1.fess_reg.shape)
 
   def utest_inf():
-    fname_imgs = ["coco1.png", "nicole1.png"]
+    path_imgs = file_util.fnames2paths(dir_base, ["coco1.png", "nicole1.png"])
     names = ["coco"] + ["nicole"]
-    fr1.files2reg(fname_imgs, names)
-    print(fr1.file2inf("coco7.png"))
-    print(fr1.file2inf("nicole7.png"))
+    fr1.files2reg(path_imgs, names)
+    path_unknowns = file_util.fnames2paths(dir_base, ["coco7.png", "nicole7.png"])
+    print(fr1.file2inf(path_unknowns[0]))
+    print(fr1.file2inf(path_unknowns[1]))
   
   #utest_reg()
   utest_inf()

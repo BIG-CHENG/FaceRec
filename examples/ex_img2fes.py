@@ -10,6 +10,7 @@ import frapi
 
 import frapi.cli2srv as cli2srv
 import frapi.img_util as img_util
+import frapi.file_util as file_util
 
 ## show basic info
 print (frapi.__version__)
@@ -17,8 +18,12 @@ print(cli2srv._env.server)
 #frapi.frapi_client.FLAGS.server = "127.0.0.1:8500"
 
 ## load image
-img1 = img_util.file2img("coco1.png")
-print (img1)
+path_img = file_util.fname2path("../imgs", "coco1.png")
+print (path_img)
+
+## load image
+img1 = img_util.file2img(path_img)
+print (img1.shape)
 
 ## image to features
 fes1 = cli2srv.img2fes(img1)

@@ -6,7 +6,8 @@
 from __future__ import print_function
 
 import numpy as np
-from scipy import misc
+#from scipy import misc
+from PIL import Image
 
 image_size = 160
 
@@ -23,11 +24,18 @@ def to_rgb(img):
   ret[:, :, 0] = ret[:, :, 1] = ret[:, :, 2] = img[:, :, 0]
   return ret
 
+def _file2img(fname):
+  ## todo: check fname
+  #img = misc.imread(fname)
+  img = Image.open(fname)
+  return np.array(img)
+
 def load_data(image_paths, do_random_crop, do_random_flip, image_size, do_prewhiten=True):
   nrof_samples = len(image_paths)
   images = np.zeros((nrof_samples, image_size, image_size, 3))
   for i in range(nrof_samples):
-    img = misc.imread(image_paths[i])
+    #img = misc.imread(image_paths[i])
+    img = _file2img(image_paths[i])
     if img.shape[2] == 2:
         img = to_rgb(img) 
     if do_prewhiten:
