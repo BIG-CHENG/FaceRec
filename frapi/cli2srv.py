@@ -16,15 +16,6 @@ from tensorflow_serving.apis import prediction_service_pb2_grpc
 
 import frapi.img_util as img_util
 
-class _env:
-  concurrency = 1   # maximum number of concurrent inference requests
-  num_tests = 1   # Number of test images
-  server = "127.0.0.1:8500" # PredictionService host:port
-  work_dir = '/tmp' # Working directory
-  model = "fnet1" ## or fnet1
-  signature = "mnet1_signature" # the same as fnet
-  
-
 class _TaskSyncer(object):
   """Syncer for the prediction tasks."""
 
@@ -74,7 +65,6 @@ class _TaskSyncer(object):
       while self._done != self._num_tests:
         self._condition.wait()
       return self._error / float(self._num_tests)
-
 
 def _create_rpc_callback(label, task_syncer):
   """Creates RPC callback function.
@@ -163,22 +153,40 @@ def do_inference(hostport, work_dir, concurrency, num_tests, model, signature, i
   #print ("err#=", task_syncer._error)
   return task_syncer._fess
 
-def img2fes(img):
-  #FLAGS.server = "127.0.0.1:8500"
-  env = _env()
-  if (len(img.shape) == 3):
-    imgs = img.reshape(1, 160, 160, 3)
-  else:
-    imgs = img
-  return do_inference(env.server, env.work_dir, env.concurrency, env.num_tests, env.model, env.signature, imgs)
+"""
+class _env:
+  concurrency = 1   # maximum number of concurrent inference requests
+  num_tests = 1   # Number of test images
+  server = "127.0.0.1:8500" # PredictionService host:port
+  work_dir = '/tmp' # Working directory
+  model = "fnet1" ## or fnet1
+  signature = "mnet1_signature" # the same as fnet
+"""
 
-def imgs2fess(imgs):
-  env = _env()
-  n_imgs = imgs.shape[0]
-  # todo: check n_imgs ...
-  fess = do_inference(env.server, env.work_dir, env.concurrency, env.num_tests, env.model, env.signature, imgs)
-  print (fess.shape)
-  return fess.reshape(n_imgs, 128)
+class cli2srv:
+
+  def __init__(self):
+    self.concurrency = 1   # maximum number of concurrent inference requests
+    self.num_tests = 1   # Number of test images
+    self.server = "127.0.0.1:8500" # PredictionService host:port
+    self.work_dir = '/tmp' # Working directory
+    self.model = "fnet1" ## or fnet1
+    self.signature = "mnet1_signature" # the same as fnet
+
+  def img2fes(self, img):
+    if (len(img.shape) == 3):
+      imgs = img.reshape(1, 160, 160, 3)
+    else:
+      imgs = img
+    return do_inference(self.server, self.work_dir, self.concurrency, self.num_tests, self.model, self.signature, imgs)
+
+  def imgs2fess(self, imgs):
+    n_imgs = imgs.shape[0]
+    # todo: check n_imgs ...
+    fess = do_inference(self.server, self.work_dir, self.concurrency, self.num_tests, self.model, self.signature, imgs)
+    #print (fess.shape)
+    return fess.reshape(n_imgs, 128)
+
 
 ## naive local test
 if __name__ == "__main__":
@@ -186,10 +194,13 @@ if __name__ == "__main__":
   def utest_img2fes():
     img = img_util.file2img("coco1.png")
     print (img.shape) # (160,160,3)
+
+    cli1 = cli2srv()
     if False: # mnet1
-      _env.server = "127.0.0.1:8600"
-      _env.model = "mnet1"
-    fes = img2fes(img)
+      cli1.server = "127.0.0.1:8600"
+      cli1.model = "mnet1"
+
+    fes = cli1.img2fes(img)
     print (str(fes))
     
   def utest_imgs2fess():

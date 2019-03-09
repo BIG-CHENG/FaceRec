@@ -6,7 +6,8 @@
 import numpy as np
 import frapi.file_util as file_util
 import frapi.fd_facade as fd
-import frapi.cli2srv as cli2srv
+#import frapi.cli2srv as cli2srv
+from frapi.cli2srv import cli2srv
 import frapi.math_helper as math_helper
 #import frapi.fr_facade as fr
 
@@ -30,11 +31,16 @@ for i in range(n_img):
 
 ## convert to np-array
 imgs = np.array(imgs)
-print (imgs)
+print (imgs.shape)
 
 
 ## image to features
-fess = cli2srv.imgs2fess(imgs)
+cli1 = cli2srv()
+if False: ## mnet1
+  cli1.server = "127.0.0.1:8600"
+  cli1.model = "mnet1"
+    
+fess = cli1.imgs2fess(imgs)
 
 ## calculate confusion matrix
 cm = math_helper.fess2confusion(fess)
