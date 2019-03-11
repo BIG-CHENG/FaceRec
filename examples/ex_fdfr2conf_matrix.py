@@ -13,27 +13,27 @@ import frapi.math_helper as math_helper
 
 ## init fd-obj
 fd1 = fd.fd_facade()
+dir_imgs = "../imgs/jaffe"
 
-## reg face
+## prep
+path_imgs = file_util.fnames2paths(dir_imgs, ["ka26.png", "ka27.png", "na199.png", "na200.png"])
+print(path_imgs)
+n_img = len(path_imgs)
+names = ["ka"]*2 + ["na"]*2
 
-
-## prep detection
-path_img = file_util.fname2path("../imgs/fdfr", "tsai_shi.jpg")
-print(path_img)
-exit()
 ## detect faces in an image
 imgs = []
-crops = fd1.file2crops(path_img)
-print (len(crops))  ## in this example, should be 1
-for j in range(len(crops)):
-  print (crops[j].shape)
-imgs += [crops[0]]
+for i in range(n_img):
+  crops = fd1.file2crops(path_imgs[i])
+  print (len(crops))  ## in this example, should be 1
+  #for j in range(len(crops)):
+  #  print (crops[j].shape)
+  imgs += [crops[0]]
 
 ## convert to np-array
 imgs = np.array(imgs)
 print (imgs.shape)
 
-exit()
 
 ## image to features
 cli1 = cli2srv()
