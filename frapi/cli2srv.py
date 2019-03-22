@@ -168,9 +168,10 @@ class cli2srv:
   def __init__(self):
     self.concurrency = 1   # maximum number of concurrent inference requests
     self.num_tests = 1   # Number of test images
-    self.server = "127.0.0.1:8500" # PredictionService host:port
+    #self.server = "127.0.0.1:8500" # PredictionService host:port
+    self.server = "frapi.ai.game.tw:8500" # PredictionService host:port
     self.work_dir = '/tmp' # Working directory
-    self.model = "fnet1" ## or fnet1
+    self.model = "mnet1" ## or fnet1
     self.signature = "mnet1_signature" # the same as fnet
 
   def img2fes(self, img):

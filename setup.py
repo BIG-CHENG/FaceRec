@@ -21,7 +21,7 @@ setuptools.setup(
     description="Package for Face Recognition API",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/BIG-CHENG/FaceRec",
+    url="http://www.ai.game.tw",
     packages=setuptools.find_packages(),
     install_requires=requirements,
     classifiers=[
